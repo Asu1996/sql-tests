@@ -19,17 +19,6 @@ const config = {
     }
 }
 
-// var config = {
-//     user: 'sa',
-//     password: '123Asu@pc',
-//     server: 'localhost',
-//     database: 'Bikes',
-//     options: {
-//         truestedConnection: true,
-//         // instanceName: 'SQLEXPRESS'
-//    }
-// }
-
 // router.get('/', (req, res) => {
 //     try {
 //         var connection = new ted.Connection(config);
@@ -72,9 +61,7 @@ router.get('/', (req, res) => {
         if(err) {
           console.log('Error: ', err)
         }
-        // If no error, then good to go...
-        // executeStatement();
-        console.log('hua?')
+
         var request = new ted.Request("SELECT * from production.brands", function(err, rowCount, rows) {
             if(err) {
                 console.log('Error: ', err)

@@ -13,4 +13,5 @@ router.get('/', function (req, res, next) {
 router.use('/add', require('./addToQ'));
 router.use('/read', require('./readFromQ'));
 router.use('/tvp1', require('./tvp1'));
+router.use('/transact', require('./transact/transact1'));
 module.exports = router;

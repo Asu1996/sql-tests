@@ -22,17 +22,7 @@ var config = {
     port: 1433,
     rowCollectionOnRequestCompletion: true
   }
-}; // var config = {
-//     user: 'sa',
-//     password: '123Asu@pc',
-//     server: 'localhost',
-//     database: 'Bikes',
-//     options: {
-//         truestedConnection: true,
-//         // instanceName: 'SQLEXPRESS'
-//    }
-// }
-// router.get('/', (req, res) => {
+}; // router.get('/', (req, res) => {
 //     try {
 //         var connection = new ted.Connection(config);
 //         connection.connect();
@@ -69,11 +59,8 @@ router.get('/', function (req, res) {
   connection.on('connect', function (err) {
     if (err) {
       console.log('Error: ', err);
-    } // If no error, then good to go...
-    // executeStatement();
+    }
 
-
-    console.log('hua?');
     var request = new ted.Request("SELECT * from production.brands", function (err, rowCount, rows) {
       if (err) {
         console.log('Error: ', err);
