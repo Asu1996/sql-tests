@@ -18,6 +18,58 @@ const config = {
         rowCollectionOnRequestCompletion: true
     }
 }
+var connection = new ted.Connection(config);
+
+router.get('/tvp3', (req, res) => {
+  connection.on('connect', function(err) {
+      if(err) {
+        console.log('Error: ', err)
+      }
+      console.log('hua?')
+      var table = {
+          columns: [
+            {name: 'a', type: ted.TYPES.Int},
+            {name: 'b', type: ted.TYPES.VarChar, length: 10},
+          //   {name: 'user_enabled', type: TYPES.Bit}
+          ],
+          rows: [
+            [15, 'Eric'],
+            [16, 'John']
+          ]
+      };
+      var request = new ted.Request("production.inserttvp1", function(err, rowCount, rows) {
+          if(err) {
+              console.log('Error: ', err)
+            }
+          console.log('tvp row count res: ', rowCount);
+          console.log('tvp dataa: ', rows);
+        });
+        request.addParameter('tvp', ted.TYPES.TVP, table);
+        
+        connection.callProcedure(request);
+        console.log('end')
+  });
+  connection.connect();
+})
+
+router.get('/', (req, res) => {
+  connection.on('connect', function(err) {
+      if(err) {
+        console.log('Error: ', err)
+      }
+
+      var request = new ted.Request("SELECT * from production.brands", function(err, rowCount, rows) {
+          if(err) {
+              console.log('Error: ', err)
+            }
+          console.log('row count res: ', rowCount);
+          console.log('dataa: ', rows);
+        });
+        
+        connection.execSql(request);
+    });
+    connection.connect();
+})
 
 // router.get('/', (req, res) => {
 //     try {
@@ -54,88 +106,35 @@ const config = {
 //     }
 // })
 
-var connection = new ted.Connection(config);
-
-router.get('/', (req, res) => {
-    connection.on('connect', function(err) {
-        if(err) {
-          console.log('Error: ', err)
-        }
-
-        var request = new ted.Request("SELECT * from production.brands", function(err, rowCount, rows) {
-            if(err) {
-                console.log('Error: ', err)
-              }
-            console.log('row count res: ', rowCount);
-            console.log('dataa: ', rows);
-          });
+// router.get('/tvp2', (req, res) => {
+//     connection.on('connect', function(err) {
+//         if(err) {
+//           console.log('Error: ', err)
+//         }
+//         console.log('hua?')
+//         var table = {
+//             columns: [
+//               {name: 'a', type: ted.TYPES.Int},
+//               {name: 'b', type: ted.TYPES.VarChar, length: 10},
+//             //   {name: 'user_enabled', type: TYPES.Bit}
+//             ],
+//             rows: [
+//               [15, 'Eric'],
+//               [16, 'John']
+//             ]
+//         };
+//         var request = new ted.Request("production.tvp1", function(err, rowCount, rows) {
+//             if(err) {
+//                 console.log('Error: ', err)
+//               }
+//             console.log('tvp row count res: ', rowCount);
+//             console.log('tvp dataa: ', rows);
+//           });
+//           request.addParameter('tvp', ted.TYPES.TVP, table);
           
-          connection.execSql(request);
-      });
-      connection.connect();
-})
-
-router.get('/tvp2', (req, res) => {
-    connection.on('connect', function(err) {
-        if(err) {
-          console.log('Error: ', err)
-        }
-        console.log('hua?')
-        var table = {
-            columns: [
-              {name: 'a', type: ted.TYPES.Int},
-              {name: 'b', type: ted.TYPES.VarChar, length: 10},
-            //   {name: 'user_enabled', type: TYPES.Bit}
-            ],
-            rows: [
-              [15, 'Eric'],
-              [16, 'John']
-            ]
-        };
-        var request = new ted.Request("production.tvp1", function(err, rowCount, rows) {
-            if(err) {
-                console.log('Error: ', err)
-              }
-            console.log('tvp row count res: ', rowCount);
-            console.log('tvp dataa: ', rows);
-          });
-          request.addParameter('tvp', ted.TYPES.TVP, table);
-          
-          connection.callProcedure(request);
-    });
-    connection.connect();
-})
-
-router.get('/tvp3', (req, res) => {
-    connection.on('connect', function(err) {
-        if(err) {
-          console.log('Error: ', err)
-        }
-        console.log('hua?')
-        var table = {
-            columns: [
-              {name: 'a', type: ted.TYPES.Int},
-              {name: 'b', type: ted.TYPES.VarChar, length: 10},
-            //   {name: 'user_enabled', type: TYPES.Bit}
-            ],
-            rows: [
-              [15, 'Eric'],
-              [16, 'John']
-            ]
-        };
-        var request = new ted.Request("production.inserttvp1", function(err, rowCount, rows) {
-            if(err) {
-                console.log('Error: ', err)
-              }
-            console.log('tvp row count res: ', rowCount);
-            console.log('tvp dataa: ', rows);
-          });
-          request.addParameter('tvp', ted.TYPES.TVP, table);
-          
-          connection.callProcedure(request);
-          console.log('end')
-    });
-    connection.connect();
-})
+//           connection.callProcedure(request);
+//     });
+//     connection.connect();
+// })
 
 module.exports = router;
